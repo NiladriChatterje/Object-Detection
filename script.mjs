@@ -22,7 +22,7 @@ const fetchVideoStream = async () => {
     const mediaStream = await navigator.mediaDevices.getUserMedia({
         video: {
             frameRate: { ideal: 30, max: 60 },
-            facingMode: isMobile ? (toggle ? 'environment' : 'user') : 'environment'
+            facingMode: isMobile ? (toggle ? { exact: 'environment' } : { exact: 'user' }) : 'environment'
         }
     });
     return mediaStream;
