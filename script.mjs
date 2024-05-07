@@ -1,22 +1,28 @@
 const webcam = document.getElementById("webcamStream");
 const webCamBtn = document.getElementById("startCam");
+const toggleBtn = document.getElementById("toggleBtn");
 const classfication = document.getElementById('class')
 const score = document.getElementById('score');
 const bbox = document.getElementById('bounding-box');
-
+let isMobile = false;
+let toggle = true;
 webCamBtn.disabled = true;
 let model;
 cocoSsd.load().then(function (loadedModel) {
     model = loadedModel;
     console.log(model)
     webCamBtn.disabled = false;
+    toggleBtn.addEventListener('click', () => { toggle = !toggle })
     console.log(webCamBtn.disabled)
 })
 const fetchVideoStream = async () => {
+    if (window.innerWidth < 1200)
+        isMobile = true;
+
     const mediaStream = await navigator.mediaDevices.getUserMedia({
         video: {
             frameRate: { ideal: 30, max: 60 },
-            facingMode: 'environment' || 'user'
+            facingMode: isMobile ? (toggle ? 'environment' : 'user') : 'environment'
         }
     });
     return mediaStream;

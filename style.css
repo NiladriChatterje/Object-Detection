@@ -6,6 +6,10 @@
     height: 100%;
 }
 
+#toggleBtn {
+    display: none;
+}
+
 #description {
     transform: translateY(-20px);
     border-radius: 25px;
@@ -18,7 +22,8 @@
 
 
 #heading,
-#startCam {
+#startCam,
+#toggleBtn {
     position: absolute;
     z-index: 2;
     left: 50%;
@@ -47,6 +52,10 @@
 
 #startCam:hover {
     box-shadow: 0 0 20px -4px white;
+}
+
+#toggleBtn {
+    bottom: 0px;
 }
 
 #startCam {
@@ -111,6 +120,11 @@ body {
 }
 
 @media screen and (max-width:1200px) {
+    #toggleBtn {
+        display: inline-block;
+
+    }
+
     #webcamStream {
         top: 50%;
         transform: translate(-50%, -50%) scaleX(-1);
