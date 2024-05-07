@@ -1,5 +1,5 @@
 @font-face {
-    font-family: 'Xirod';
+    font-family: 'xirod';
     src: url('https://fonts.cdnfonts.com/css/xirod');
     font-weight: 800;
 }
@@ -20,9 +20,11 @@
 
 #webcamStream {
     position: absolute;
-    width: 88vw;
+    overflow: clip;
+    width: 88%;
+    height: 90%;
     left: 50%;
-    transform: translateX(-50%);
+    transform: translateX(-50%) scaleX(-1);
     top: 18px;
     border-radius: 15px;
     border: 2px solid white
