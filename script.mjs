@@ -12,9 +12,14 @@ cocoSsd.load().then(function (loadedModel) {
     model = loadedModel;
     console.log(model)
     webCamBtn.disabled = false;
-    toggleBtn.addEventListener('click', () => { toggle = !toggle })
     console.log(webCamBtn.disabled)
+});
+
+toggleBtn.addEventListener('click', () => {
+    console.log('hello')
+    toggle = !toggle
 })
+
 const fetchVideoStream = async () => {
     if (window.innerWidth < 1200)
         isMobile = true;
@@ -22,7 +27,7 @@ const fetchVideoStream = async () => {
     const mediaStream = await navigator.mediaDevices.getUserMedia({
         video: {
             frameRate: { ideal: 30, max: 60 },
-            facingMode: isMobile ? (toggle ? { exact: 'environment' } : { exact: 'user' }) : 'environment'
+            facingMode: isMobile ? (toggle ? 'environment' : 'user') : 'environment'
         }
     });
     return mediaStream;
