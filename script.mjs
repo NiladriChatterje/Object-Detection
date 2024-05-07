@@ -1,7 +1,13 @@
 const webcam = document.getElementById("webcamStream");
 const webCamBtn = document.getElementById("startCam");
+webCamBtn.disabled = true;
 let model;
-
+cocoSsd.load().then(function (loadedModel) {
+    model = loadedModel;
+    console.log(model)
+    webCamBtn.disabled = false;
+    console.log(webCamBtn.disabled)
+})
 const fetchVideoStream = async () => {
     const mediaStream = await navigator.mediaDevices.getUserMedia({
         video: {
@@ -11,13 +17,14 @@ const fetchVideoStream = async () => {
     });
     return mediaStream;
 }
-cocoSsd.load().then(function (loadedModel) {
-    model = loadedModel;
-    console.log(model)
-})
+
 
 function predictObject() {
-
+    model.detect(webcam, 10/*10 boxes*/, 0.50).then(
+        prediction => {
+            console.log(prediction)
+        }
+    )
 }
 
 const addStreamToVideoEle = async (event) => {
