@@ -1,8 +1,21 @@
-@font-face {
-    font-family: 'xirod';
-    src: url('https://fonts.cdnfonts.com/css/xirod');
-    font-weight: 800;
+@import url('https://fonts.cdnfonts.com/css/blanka');
+
+#container {
+    position: relative;
+    width: 60%;
+    height: 100%;
 }
+
+#description {
+    transform: translateY(-20px);
+    border-radius: 25px;
+    height: 87%;
+    padding: 8px 15px;
+    color: white;
+    border: 2px solid white;
+    width: 30%;
+}
+
 
 #heading,
 #startCam {
@@ -17,6 +30,7 @@
 
 #heading {
     top: 10px;
+    font-family: 'Anurati', sans-serif;
 }
 
 #webcamStream {
@@ -48,7 +62,40 @@
     background-size: contain;
 }
 
+#description::-webkit-scrollbar {
+    width: 5px;
+}
+
+#description::-webkit-scrollbar-track {
+    width: 5px;
+    background-color: transparent;
+}
+
+#description::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: white;
+}
+
+.details-frame {
+    line-height: 0;
+    margin-bottom: 20px;
+}
+
+.details-frame>p {
+    border-radius: 10px;
+    border: 1px solid white
+}
+
+.details-frame>span {
+    color: grey;
+    font-size: small;
+}
+
 body {
+    font-family: 'Blanka', sans-serif;
+    display: flex;
+    align-items: center;
+    overflow: clip;
     margin: 0;
     padding: 0;
     background-color: rgb(43, 43, 43);
@@ -60,7 +107,29 @@ body {
     #webcamStream {
         top: 50%;
         transform: translate(-50%, -50%) scaleX(-1);
-        height: 87vh;
+        height: 100%;
         z-index: -2;
+    }
+
+    #heading {
+        top: 0px;
+        position: fixed;
+    }
+
+    #container {
+        height: 50%;
+        width: 100%;
+    }
+
+    #description {
+        width: 80%;
+        height: 25%;
+        overflow: clip auto;
+    }
+
+    body {
+        padding: 10px 0;
+        justify-content: space-around;
+        flex-direction: column;
     }
 }
