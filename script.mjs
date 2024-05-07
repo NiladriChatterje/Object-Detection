@@ -10,11 +10,19 @@ const fetchVideoStream = async () => {
     });
     return mediaStream;
 }
+function predictObject() {
 
-const addStreamToVideoEle = async () => {
+}
+
+const addStreamToVideoEle = async (event) => {
+    if (!model) return;
     const mediaStream = await fetchVideoStream();
     console.log(mediaStream)
     webcam.srcObject = mediaStream;
+    event.target.style.opacity = 0;
+
+    webcam.addEventListener('loadeddata', predictObject)
 }
+
 
 webCamBtn.addEventListener('click', addStreamToVideoEle)
