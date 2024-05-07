@@ -1,5 +1,6 @@
 const webcam = document.getElementById("webcamStream");
 const webCamBtn = document.getElementById("startCam");
+let model;
 
 const fetchVideoStream = async () => {
     const mediaStream = await navigator.mediaDevices.getUserMedia({
@@ -10,6 +11,11 @@ const fetchVideoStream = async () => {
     });
     return mediaStream;
 }
+cocoSsd.load().then(function (loadedModel) {
+    model = loadedModel;
+    console.log(model)
+})
+
 function predictObject() {
 
 }
