@@ -17,22 +17,22 @@
     <section id="description">
         <section class="details-frame">
             <h4>Classified as:</h4>
-            <p></p>
+            <p id="class"></p>
         </section>
         <section class="details-frame">
             <h4>Score :</h4>
-            <span>(minimum threshold set to: 50%)</span>
-            <p></p>
+            <span>(minimum threshold set to: 50%)</span><br />
+            <p id="score"></p>
         </section>
         <section class="details-frame">
             <h4>Bounding Box :</h4>
-            <span>[(x1,y1),(x2,y2),(x3,y3),(x4,y4)]:</span>
-            <p></p>
+            <span>[(x1,y1),(x4,y4)]:</span><br />
+            <p id="bounding-box"></p>
         </section>
     </section>
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.19.0/dist/tf.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/coco-ssd@2.2.3/dist/coco-ssd.min.js"></script>
-    <script type="module" src="./script.mjs"></script>
+    <script defer type="module" src="./script.mjs"></script>
 </body>
 
 </html>
