@@ -25,11 +25,11 @@ const fetchVideoStream = async () => {
     if (window.innerWidth < 1200)
         isMobile = true;
 
-    if (toggle) webcam.style.transform = ` translate(-50%, -50%) scaleX(1)`
+    if (toggle && isMobile) webcam.style.transform = ` translate(-50%, -50%) scaleX(1)`
     else webcam.style.transform = ` translate(-50%, -50%) scaleX(-1)`
     const mediaStream = await navigator.mediaDevices.getUserMedia({
         video: {
-            frameRate: { ideal: 30, max: 60 },
+            frameRate: { max: 60 },
             facingMode: isMobile ? (toggle ? 'environment' : 'user') : 'environment'
         }
     });
