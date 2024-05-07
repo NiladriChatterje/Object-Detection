@@ -12,19 +12,20 @@ cocoSsd.load().then(function (loadedModel) {
     model = loadedModel;
     console.log(model)
     webCamBtn.disabled = false;
-
+    toggleBtn.addEventListener('click', (e) => {
+        toggle = !toggle
+        addStreamToVideoEle(e)
+    })
     console.log(webCamBtn.disabled)
 });
 
-toggleBtn.addEventListener('click', () => {
-    console.log('hello')
-    toggle = !toggle
-})
+
 
 const fetchVideoStream = async () => {
     if (window.innerWidth < 1200)
         isMobile = true;
 
+    if (toggle) webcam.style.transform = ` translate(-50%, -50%) scaleX(1)`
     const mediaStream = await navigator.mediaDevices.getUserMedia({
         video: {
             frameRate: { ideal: 30, max: 60 },
@@ -54,7 +55,7 @@ const addStreamToVideoEle = async (event) => {
     const mediaStream = await fetchVideoStream();
     console.log(mediaStream)
     webcam.srcObject = mediaStream;
-    event.target.style.opacity = 0;
+    webCamBtn.style.opacity = 0;
 
     webcam.addEventListener('loadeddata', predictObject)
 }
