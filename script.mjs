@@ -12,6 +12,7 @@ cocoSsd.load().then(function (loadedModel) {
     model = loadedModel;
     console.log(model)
     webCamBtn.disabled = false;
+
     console.log(webCamBtn.disabled)
 });
 
@@ -37,14 +38,15 @@ const fetchVideoStream = async () => {
 function predictObject() {
     model.detect(webcam, 10/*10 boxes*/, 0.50).then(
         prediction => {
-            console.log(prediction);
-            classfication.textContent = prediction[0].class
-            score.textContent = (prediction[0].score * 100).toPrecision(6) + '%'
-
-            bbox.textContent = JSON.stringify(prediction[0].bbox.map(item => item.toPrecision(5)))
+            prediction.forEach(pred => {
+                classfication.textContent = pred.class + ', '
+                score.textContent = (pred.score * 100).toPrecision(6) + '%' + ' ,'
+                bbox.textContent = JSON.stringify(pred.bbox.map(item => item.toPrecision(5))) + ' ,\n'
+            })
 
         }
-    )
+    );
+    window.requestAnimationFrame(predictObject)
 }
 
 const addStreamToVideoEle = async (event) => {
@@ -56,6 +58,5 @@ const addStreamToVideoEle = async (event) => {
 
     webcam.addEventListener('loadeddata', predictObject)
 }
-
 
 webCamBtn.addEventListener('click', addStreamToVideoEle)

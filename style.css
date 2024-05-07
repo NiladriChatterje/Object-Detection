@@ -92,6 +92,7 @@
 }
 
 .details-frame>p {
+    white-space: pre;
     border-radius: 10px;
     margin-top: 15px;
     font-size: small;
