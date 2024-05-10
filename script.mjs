@@ -1,9 +1,8 @@
 const webcam = document.getElementById("webcamStream");
 const webCamBtn = document.getElementById("startCam");
 const toggleBtn = document.getElementById("toggleBtn");
-const classfication = document.getElementById('class')
-const score = document.getElementById('score');
-const bbox = document.getElementById('bounding-box');
+const liveView = document.getElementById("container");
+
 let isMobile = false;
 let toggle = true;
 webCamBtn.disabled = true;
@@ -36,14 +35,34 @@ const fetchVideoStream = async () => {
     return mediaStream;
 }
 
-
+const children = []
 function predictObject() {
     model.detect(webcam, 10/*10 boxes*/, 0.50).then(
         prediction => {
+            for (let i = 0; i < children.length; i++)
+                liveView.removeChild(children[i]);
+            children.length = 0;
             prediction.forEach(pred => {
-                classfication.textContent = pred.class + ', '
-                score.textContent = (pred.score * 100).toPrecision(6) + '%' + ' ,'
-                bbox.textContent = JSON.stringify(pred.bbox.map(item => item.toPrecision(5))) + ' ,\n'
+                const paragraph = document.createElement('p');
+                paragraph.innerText = `${pred.class} -----> ${pred.score.toFixed(2) * 100}% confidence`
+                paragraph.style.marginLeft = `${pred.bbox[0]}px`;
+                paragraph.style.marginTop = `${pred.bbox[1]}px`
+                paragraph.style.width = `${pred.bbox[2] - 280}px`;
+                paragraph.style.top = `0`;
+                paragraph.style.left = `0`;
+
+                const highLighter = document.createElement('div');
+                highLighter.setAttribute('class', 'highlighter');
+
+                highLighter.style = `left:${pred.bbox[0] + 80}px;
+                top:${pred.bbox[1] + 100}px;
+                width:${pred.bbox[2] - 280}px;
+                height:${pred.bbox[3] - 200}px`;
+
+                liveView.appendChild(highLighter);
+                liveView.appendChild(paragraph);
+                children.push(highLighter);
+                children.push(paragraph);
             })
 
         }
