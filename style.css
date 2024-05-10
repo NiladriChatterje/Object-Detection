@@ -10,17 +10,6 @@
     display: none;
 }
 
-#description {
-    transform: translateY(-20px);
-    border-radius: 25px;
-    height: 87%;
-    padding: 15px;
-    color: white;
-    border: 2px solid white;
-    width: 30%;
-}
-
-
 #heading,
 #startCam,
 #toggleBtn {
@@ -83,20 +72,23 @@ body {
 }
 
 .highlighter {
-    position: absolute;
+    position: relative;
     z-index: 10;
     border-radius: 25px;
     overflow: clip;
-    box-shadow: 0 0 15px -10px rgb(255, 216, 41);
     transition: all 0.1s;
-    border: 0.5px solid rgb(28, 41, 28);
+    border: 3px solid rgb(28, 41, 28);
 }
 
 p {
     position: absolute;
     z-index: 11;
+    white-space: nowrap;
     font-size: x-small;
     color: white;
+    background-color: rgb(35, 35, 35);
+    padding: 6px 6px;
+    border-radius: 10px;
 }
 
 @media screen and (max-width:1200px) {
@@ -106,6 +98,17 @@ p {
         bottom: 20px;
         font-weight: 900;
         cursor: pointer;
+        background-color: rgb(205, 205, 205);
+        box-shadow: 0 5px 18px -8px rgb(8, 8, 8);
+        transition: background-color 0.3s ease, border 0.1s ease-in,
+            transform 0.1s ease-in-out;
+    }
+
+    #toggleBtn:hover {
+        background-color: black;
+        border: 2px solid white;
+        color: white;
+        transform: translate(-50%, -2px);
     }
 
     #webcamStream {

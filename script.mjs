@@ -2,6 +2,7 @@ const webcam = document.getElementById("webcamStream");
 const webCamBtn = document.getElementById("startCam");
 const toggleBtn = document.getElementById("toggleBtn");
 const liveView = document.getElementById("container");
+const preloader = document.getElementsByClassName("preloaderContainer")[0];
 
 let isMobile = false;
 let toggle = true;
@@ -9,7 +10,8 @@ webCamBtn.disabled = true;
 let model;
 cocoSsd.load().then(function (loadedModel) {
     model = loadedModel;
-    console.log(model)
+    console.log(model);
+    preloader.style.display = 'none';
     webCamBtn.disabled = false;
     toggleBtn.addEventListener('click', (e) => {
         toggle = !toggle
@@ -24,40 +26,43 @@ const fetchVideoStream = async () => {
     if (window.innerWidth < 1200)
         isMobile = true;
 
-    if (toggle && isMobile) webcam.style.transform = ` translate(-50%, -50%) scaleX(1)`
+    if (toggle && isMobile) webcam.style.transform = ` translate(-50%, -50%) scaleX(1)`;
+
     else if (!toggle && isMobile) webcam.style.transform = ` translate(-50%, -50%) scaleX(-1)`
     const mediaStream = await navigator.mediaDevices.getUserMedia({
         video: {
             frameRate: { max: 60 },
-            facingMode: isMobile ? (toggle ? 'environment' : 'user') : 'environment'
+            facingMode: isMobile ? (toggle ? 'environment' : 'user') : 'user'
         }
     });
     return mediaStream;
 }
-
+let left, width;
 const children = []
 function predictObject() {
-    model.detect(webcam, 10/*10 boxes*/, 0.50).then(
+    model.detect(webcam, 10/*10 boxes*/, 0.60).then(
         prediction => {
             for (let i = 0; i < children.length; i++)
                 liveView.removeChild(children[i]);
             children.length = 0;
             prediction.forEach(pred => {
                 const paragraph = document.createElement('p');
-                paragraph.innerText = `${pred.class} -----> ${pred.score.toFixed(2) * 100}% confidence`
-                paragraph.style.marginLeft = `${pred.bbox[0]}px`;
-                paragraph.style.marginTop = `${pred.bbox[1]}px`
-                paragraph.style.width = `${pred.bbox[2] - 280}px`;
+                left = toggle && isMobile ? pred.bbox[0] : pred.bbox[0] + 150;
+                width = toggle && isMobile ? pred.bbox[2] : pred.bbox[2];
+                paragraph.innerText = `${pred.class} | ${pred.score.toFixed(2) * 100}% confidence`
+                paragraph.style.marginLeft = `${left}px`;
+                paragraph.style.marginTop = `${pred.bbox[1] + 70}px`
+                paragraph.style.width = `${width}px`;
                 paragraph.style.top = `0`;
                 paragraph.style.left = `0`;
 
                 const highLighter = document.createElement('div');
                 highLighter.setAttribute('class', 'highlighter');
 
-                highLighter.style = `left:${pred.bbox[0] + 80}px;
-                top:${pred.bbox[1] + 100}px;
-                width:${pred.bbox[2] - 280}px;
-                height:${pred.bbox[3] - 200}px`;
+                highLighter.style = `left:${left}px;
+                top:${pred.bbox[1] + 80}px;
+                width:${width}px;
+                height:${pred.bbox[3]}px`;
 
                 liveView.appendChild(highLighter);
                 liveView.appendChild(paragraph);
